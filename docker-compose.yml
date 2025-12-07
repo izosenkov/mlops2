@@ -27,6 +27,7 @@ services:
       AWS_ACCESS_KEY_ID: minio
       AWS_SECRET_ACCESS_KEY: minio123
       AWS_DEFAULT_REGION: us-east-1
+      MLFLOW_SECURITY_ALLOW_INSECURE_DEFAULTS: "true" 
     volumes:
       - ./mlflow_data:/mlflow
     depends_on:

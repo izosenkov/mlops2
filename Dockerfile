@@ -17,11 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir "poetry==$POETRY_VERSION"
 
 COPY pyproject.toml poetry.lock* ./
-
+COPY src ./src
 RUN poetry install --no-ansi
-
-# код
-COPY src src
 
 EXPOSE 8000
 

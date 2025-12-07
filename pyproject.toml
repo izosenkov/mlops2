@@ -3,7 +3,6 @@ name = "hw2"
 version = "0.1.0"
 description = ""
 authors = ["Alexander Izosenkov <aaizosenkov@gmail.com>"]
-readme = "README.md"
 packages = [{ include = "hw2", from = "src" }]
 
 [tool.poetry.dependencies]
