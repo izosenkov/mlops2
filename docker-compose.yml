@@ -1,12 +1,10 @@
-version: "3.9"
-
 services:
   minio:
     image: minio/minio
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: minio123
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
     ports:
       - "9000:9000"
       - "9001:9001"
@@ -22,12 +20,12 @@ services:
       --default-artifact-root s3://mlflow/
       --host 0.0.0.0
       --port 5000
+      --allowed-hosts mlflow,mlflow:5000,localhost,localhost:5000,localhost:5001
     environment:
-      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
-      AWS_ACCESS_KEY_ID: minio
-      AWS_SECRET_ACCESS_KEY: minio123
-      AWS_DEFAULT_REGION: us-east-1
-      MLFLOW_SECURITY_ALLOW_INSECURE_DEFAULTS: "true" 
+      MLFLOW_S3_ENDPOINT_URL: ${MLFLOW_S3_ENDPOINT_URL}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
     volumes:
       - ./mlflow_data:/mlflow
     depends_on:
@@ -40,6 +38,11 @@ services:
     container_name: mlops-app
     environment:
       MLFLOW_TRACKING_URI: http://mlflow:5000
+      # S3 credentials для сохранения артефактов через MLflow
+      MLFLOW_S3_ENDPOINT_URL: ${MLFLOW_S3_ENDPOINT_URL}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
     depends_on:
       - mlflow
     ports:

@@ -1,11 +1,12 @@
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
 import os
-import mlflow
-from mlflow.tracking import MlflowClient
 
-from .train import train_model
+import mlflow
+from fastapi import FastAPI
+from mlflow.tracking import MlflowClient
+from pydantic import BaseModel, Field
+
 from .logger import get_logger
+from .train import train_model
 
 logger = get_logger()
 
@@ -87,10 +88,9 @@ def run_experiment(req: RunRequest):
 
 @app.get("/experiments/{run_id}")
 def get_experiment_info(run_id: str):
-    
+
     """
     возвращает информацию по эксперименту из mlflow
-    
     """
 
     logger.info("запрос /experiments/%s", run_id)

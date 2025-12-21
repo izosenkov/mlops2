@@ -1,10 +1,10 @@
 import mlflow
 import mlflow.sklearn
 from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
 from .logger import get_logger
 
@@ -22,7 +22,7 @@ def _load_data():
         data.data, data.target, test_size=0.2, random_state=42
     )
     logger.info("Выборка разбита на train/test")
-    
+
     return X_train, X_test, y_train, y_test
 
 
@@ -37,7 +37,7 @@ def train_model(
     model_type: тип модели, "logreg" или "rf"
     C: гиперпараметр для логрегрессии
     n_estimators: гиперпараметр для RandomForest
-    
+
     возвращаем словарь с run_id, метриками и параметрами
     """
     logger.info(

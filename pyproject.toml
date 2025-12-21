@@ -12,6 +12,24 @@ uvicorn = { extras = ["standard"], version = ">=0.30.0,<0.31.0" }
 mlflow = ">=3.7.0,<4.0.0"
 scikit-learn = ">=1.7.2,<2.0.0"
 pydantic = ">=2.12.5,<3.0.0"
+boto3 = ">=1.35.0,<2.0.0"  # для работы с S3 (MinIO)
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.0.0,<9.0.0"
+pytest-mock = ">=3.14.0,<4.0.0"
+httpx = ">=0.28.0,<1.0.0"  # для тестирования FastAPI
+ruff = ">=0.8.0,<1.0.0"  # линтер
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
 
 [build-system]
 requires = ["poetry-core>=1.8.0,<2.0.0"]

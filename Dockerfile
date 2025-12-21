@@ -16,8 +16,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN pip install --no-cache-dir "poetry==$POETRY_VERSION"
 
+# Сначала копируем только файлы зависимостей и устанавливаем их
+# Это позволяет кэшировать слой с зависимостями
 COPY pyproject.toml poetry.lock* ./
+RUN poetry install --no-ansi --no-root
+
+# Теперь копируем исходный код
 COPY src ./src
+
+# Устанавливаем проект (без повторной установки зависимостей)
 RUN poetry install --no-ansi
 
 EXPOSE 8000
